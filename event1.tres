@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Event" load_steps=2 format=3 uid="uid://w4bcp4jfvwq0"]
+
+[ext_resource type="Script" path="res://event.gd" id="1_h2tyw"]
+
+[resource]
+script = ExtResource("1_h2tyw")
+event_name = "enable"
+is_emitter = false
+is_target = false

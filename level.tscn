@@ -1,0 +1,115 @@
+[gd_scene load_steps=18 format=3 uid="uid://0qqif26pk0d2"]
+
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_g5htf"]
+[ext_resource type="Script" path="res://level.gd" id="1_o3j51"]
+[ext_resource type="Script" path="res://eventtrigger.gd" id="3_rplyb"]
+[ext_resource type="Resource" uid="uid://w4bcp4jfvwq0" path="res://event1.tres" id="4_cj6hb"]
+[ext_resource type="Script" path="res://step.gd" id="5_infi7"]
+[ext_resource type="Resource" uid="uid://vlg4fl8wpm6u" path="res://event3.tres" id="6_ing1m"]
+
+[sub_resource type="Gradient" id="Gradient_hm5kk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sm1t3"]
+gradient = SubResource("Gradient_hm5kk")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvdmg"]
+size = Vector2(63, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jc63"]
+size = Vector2(1175, 20)
+
+[sub_resource type="Gradient" id="Gradient_rhm3s"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g2ggj"]
+gradient = SubResource("Gradient_rhm3s")
+
+[sub_resource type="Resource" id="Resource_687ga"]
+script = ExtResource("5_infi7")
+event = ExtResource("4_cj6hb")
+is_target = false
+is_emitter = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ti1no"]
+size = Vector2(48, 36)
+
+[sub_resource type="Resource" id="Resource_dkj4h"]
+script = ExtResource("5_infi7")
+event = ExtResource("4_cj6hb")
+is_target = true
+is_emitter = false
+
+[sub_resource type="Resource" id="Resource_thqg6"]
+script = ExtResource("5_infi7")
+event = ExtResource("6_ing1m")
+is_target = true
+is_emitter = false
+
+[sub_resource type="Resource" id="Resource_k7wbt"]
+script = ExtResource("5_infi7")
+event = ExtResource("6_ing1m")
+is_target = false
+is_emitter = true
+
+[node name="level" type="Node2D"]
+script = ExtResource("1_o3j51")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(85, -48)
+collision_layer = 2
+script = ExtResource("1_g5htf")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = SubResource("GradientTexture2D_sm1t3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-0.5, -2)
+shape = SubResource("RectangleShape2D_qvdmg")
+
+[node name="floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(577.5, 0)
+shape = SubResource("RectangleShape2D_1jc63")
+
+[node name="Sprite2D" type="Sprite2D" parent="floor"]
+position = Vector2(566, 0)
+scale = Vector2(18.6875, 0.34375)
+texture = SubResource("GradientTexture2D_g2ggj")
+
+[node name="eventtrigger" type="Area2D" parent="."]
+position = Vector2(437, -9)
+collision_mask = 2
+script = ExtResource("3_rplyb")
+steps = Array[ExtResource("5_infi7")]([SubResource("Resource_687ga")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="eventtrigger"]
+position = Vector2(14, -8)
+shape = SubResource("RectangleShape2D_ti1no")
+
+[node name="eventtrigger2" type="Area2D" parent="."]
+position = Vector2(864, -15)
+collision_mask = 2
+script = ExtResource("3_rplyb")
+steps = Array[ExtResource("5_infi7")]([SubResource("Resource_dkj4h"), SubResource("Resource_thqg6"), SubResource("Resource_k7wbt")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="eventtrigger2"]
+position = Vector2(-1, -6)
+shape = SubResource("RectangleShape2D_ti1no")
+disabled = true
+
+[node name="eventtrigger3" type="Area2D" parent="."]
+position = Vector2(644, -9)
+collision_mask = 2
+script = ExtResource("3_rplyb")
+steps = Array[ExtResource("5_infi7")]([SubResource("Resource_dkj4h"), SubResource("Resource_thqg6")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="eventtrigger3"]
+position = Vector2(14, -8)
+shape = SubResource("RectangleShape2D_ti1no")
+disabled = true
+
+[connection signal="body_entered" from="eventtrigger" to="eventtrigger" method="_on_body_entered"]
+[connection signal="body_entered" from="eventtrigger2" to="eventtrigger2" method="_on_body_entered"]
+[connection signal="body_entered" from="eventtrigger3" to="eventtrigger3" method="_on_body_entered"]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Event" load_steps=2 format=3 uid="uid://be7qvt0xv0mbu"]
+
+[ext_resource type="Script" path="res://event.gd" id="1_f3j0b"]
+
+[resource]
+script = ExtResource("1_f3j0b")
+event_name = "print"
+is_emitter = true
+is_target = false
